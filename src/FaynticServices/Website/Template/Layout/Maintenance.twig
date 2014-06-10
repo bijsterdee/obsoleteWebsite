@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Fayntic Services</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script>
+            var _prum = [
+                ['id', '52e234ddabe53da13d000000'],
+                ['mark', 'firstbyte', (new Date()).getTime()]
+            ];
+            (function () {
+                var s = document.getElementsByTagName('script')[0]
+                        , p = document.createElement('script');
+                p.async = 'async';
+                p.src = '//rum-static.pingdom.net/prum.min.js';
+                s.parentNode.insertBefore(p, s);
+            })();
+        </script>
+        <link href="//static.fayntic.com/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen"/>
+        <link href="//static.fayntic.com/css/icomoon.min.css" rel="stylesheet" type="text/css"/>
+        <link href="//static.fayntic.com/css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body style="margin-top: 150px; ">
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="text-center">
+                        <img src="//static.fayntic.com/images/fayntic/128_fayntic-logo-full.png" alt="logo"/>
+                    </p>
+                    <hr/>
+                    {% if "nl_NL" == locale %}
+                    <p class="text-center">
+                        <strong>Onderhoudswerkzaamheden</strong>
+                    </p>
+                    <p class="text-center">We zijn momenteel druk bezig om het platform te verbeteren.<br/> De verwachting is dat we begin maart weer volledig terug te zijn!</p>
+                    {% else %}
+                    <p class="text-center">
+                        <strong>Maintenance</strong>
+                    </p>
+                    <p class="text-center">We are currently working to improve our platform.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-12 text-right text-muted">
+                <span class="icon-network"></span> {{ server['remote_addr'] }}
+            </div>
+        </div>
+    </body>
+</html>

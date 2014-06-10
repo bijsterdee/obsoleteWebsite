@@ -1,0 +1,186 @@
+<database name="fayntic-services" defaultIdMethod="native" namespace="FaynticServices\Website\Model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/vendor/propel/propel/resources/xsd/database.xsd">
+    <table name="account">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="login" type="varchar" required="true" size="32"/>
+        <column name="language_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <column name="password" type="varchar" required="true" size="64"/>
+        <column name="reset_code" type="varchar" required="false" size="40"/>
+        <behavior name="timestampable"/>
+        <foreign-key foreignTable="language" onDelete="cascade" onUpdate="cascade">
+            <reference local="language_id" foreign="id"/>
+        </foreign-key>
+        <unique>
+            <unique-column name="login"/>
+        </unique>
+    </table>
+    <table name="account_contact">
+        <column name="account_id" type="integer" required="true" primaryKey="true" sqlType="int(10) unsigned"/>
+        <column name="gender" type="varchar" sqlType="enum('male','female')" required="true"/>
+        <column name="name" type="varchar" required="true" size="128"/>
+        <column name="address" type="longvarchar" required="true"/>
+        <column name="country_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <column name="email" type="varchar" required="true" size="254"/>
+        <column name="phone" type="varchar" size="20"/>
+        <behavior name="timestampable"/>
+        <behavior name="versionable"/>
+        <foreign-key foreignTable="account" onDelete="cascade" onUpdate="cascade">
+            <reference local="account_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="country" onDelete="cascade" onUpdate="cascade">
+            <reference local="country_id" foreign="id"/>
+        </foreign-key>
+    </table>
+    <table name="account_ftp">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="account_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <column name="username" type="varchar" required="true" size="32"/>
+        <column name="password" type="varchar" required="true" size="40"/>
+        <column name="uid" type="integer" required="true" sqlType="smallint(5) unsigned" size="5"/>
+        <column name="gid" type="integer" required="true" sqlType="smallint(5) unsigned" size="5"/>
+        <column name="location" type="varchar" required="true" default="/" size="255"/>
+        <behavior name="timestampable"/>
+        <foreign-key foreignTable="account" onDelete="cascade" onUpdate="cascade">
+            <reference local="account_id" foreign="id"/>
+        </foreign-key>
+    </table>
+    <table name="account_email">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="account_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <column name="domain" type="varchar" required="true" size="64"/>
+        <column name="email" type="varchar" required="true" size="254"/>
+        <column name="password" type="varchar" required="true" size="254"/>
+        <column name="quota" type="integer" sqlType="smallint(5) unsigned"/>
+        <behavior name="timestampable"/>
+        <foreign-key foreignTable="account" onDelete="cascade" onUpdate="cascade" name="account_email_account">
+            <reference local="account_id" foreign="id"/>
+        </foreign-key>
+        <index name="account_email_account_id">
+            <index-column name="account_id"/>
+        </index>
+        <index name="account_email_domain">
+            <index-column name="domain"/>
+        </index>
+        <index name="account_email_email">
+            <index-column name="email"/>
+        </index>
+    </table>
+    <table name="account_email_alias">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="account_email_id" type="integer" sqlType="int(10) unsigned"/>
+        <column name="account_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <column name="source" type="varchar" required="true" size="254"/>
+        <column name="target" type="varchar" required="true" size="254"/>
+        <behavior name="timestampable"/>
+        <foreign-key foreignTable="account" onDelete="cascade" onUpdate="cascade" name="account_email_alias_account">
+            <reference local="account_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="account_email" onDelete="cascade" onUpdate="cascade">
+            <reference local="account_email_id" foreign="id"/>
+        </foreign-key>
+        <index name="account_email_alias_account_id">
+            <index-column name="account_id"/>
+        </index>
+        <index name="account_email_alias_source">
+            <index-column name="source"/>
+        </index>
+    </table>
+    <table name="account_product">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="account_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <column name="product_id" type="integer" required="false" sqlType="int(10) unsigned"/>
+        <column name="amount" type="integer" sqlType="smallint(5) unsigned" default="1"/>
+        <column name="name" type="varchar" size="255"/>
+        <column name="price" type="decimal" required="false" sqlType="decimal(5,2)"/>
+        <column name="btw" type="decimal" required="false" sqlType="decimal(5,2)"/>
+        <column name="terminated_at" type="timestamp" required="false"/>
+        <behavior name="timestampable"/>
+        <foreign-key foreignTable="account" onDelete="cascade" onUpdate="cascade">
+            <reference local="account_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="product" onDelete="setnull" onUpdate="cascade">
+            <reference local="product_id" foreign="id"/>
+        </foreign-key>
+        <index>
+            <index-column name="account_id"/>
+        </index>
+        <index>
+            <index-column name="product_id"/>
+        </index>
+    </table>
+    <table name="account_web">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="account_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <column name="domain" type="varchar" required="true" size="64"/>
+        <column name="subdomain" type="varchar" size="254"/>
+        <column name="location" type="varchar" size="254"/>
+        <column name="is_pma" type="integer" sqlType="tinyint(1) unsigned" default="false"/>
+        <column name="is_webmail" type="integer" sqlType="tinyint(1) unsigned" default="false"/>
+        <column name="is_active" type="integer" sqlType="tinyint(1) unsigned" default="false"/>
+        <behavior name="timestampable"/>
+        <foreign-key foreignTable="account" onDelete="cascade" onUpdate="cascade">
+            <reference local="account_id" foreign="id"/>
+        </foreign-key>
+    </table>
+    <table name="account_web_alias">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="account_web_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <column name="name" type="varchar" required="true" size="254"/>
+        <behavior name="timestampable"/>
+        <foreign-key foreignTable="account_web" onDelete="cascade" onUpdate="cascade">
+            <reference local="account_web_id" foreign="id"/>
+        </foreign-key>
+    </table>
+    <table name="account_support">
+        <column name="account_id" type="integer" required="true" primaryKey="true" sqlType="int(10) unsigned"/>
+        <column name="is_registered" type="integer" sqlType="tinyint(1) unsigned" default="false"/>
+        <column name="zendesk_user_id" type="integer" required="true" sqlType="int(10) unsigned"/>
+        <behavior name="timestampable"/>
+        <foreign-key foreignTable="account" onDelete="cascade" onUpdate="cascade">
+            <reference local="account_id" foreign="id"/>
+        </foreign-key>
+    </table>
+    <table name="country">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="identifier" type="varchar" required="true" size="5"/>
+        <column name="name" type="varchar" required="true" size="255"/>
+        <behavior name="i18n">
+            <parameter name="i18n_columns" value="name"/>
+        </behavior>
+        <behavior name="timestampable"/>
+    </table>
+    <table name="language">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="identifier" type="varchar" required="true" size="5"/>
+        <column name="name" type="varchar" required="true" size="255"/>
+        <column name="is_default" type="integer" sqlType="tinyint(1) unsigned" default="false"/>
+        <behavior name="i18n">
+            <parameter name="i18n_columns" value="name"/>
+        </behavior>
+        <behavior name="timestampable"/>
+    </table>
+    <table name="product">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="category" type="varchar" sqlType="enum('bandwidth', 'bouncer', 'database', 'diskspace', 'domain', 'email', 'ftp')"/>
+        <column name="type" type="varchar" sqlType="enum('single', 'multiple')" default="single"/>
+        <column name="name" type="varchar" required="true" size="255"/>
+        <column name="price" type="decimal" sqlType="decimal(5,2)" default="0.00"/>
+        <column name="btw" type="decimal" sqlType="decimal(5,2)" default="21.00"/>
+        <column name="period" type="integer" sqlType="tinyint(3) unsigned" default="1"/>
+        <column name="period_unit" type="varchar" sqlType="enum('second', 'minute', 'hour', 'day', 'month', 'year')" default="month"/>
+        <column name="is_available" type="integer" sqlType="tinyint(1) unsigned" default="false"/>
+        <behavior name="i18n">
+            <parameter name="i18n_columns" value="name"/>
+        </behavior>
+        <behavior name="timestampable"/>
+    </table>
+    <table name="translation">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" sqlType="int(10) unsigned"/>
+        <column name="category" type="varchar" sqlType="enum('validation')"/>
+        <column name="identifier" type="varchar" required="true" size="64"/>
+        <column name="name" type="varchar" size="255"/>
+        <behavior name="i18n">
+            <parameter name="i18n_columns" value="name"/>
+        </behavior>
+        <behavior name="timestampable"/>
+    </table>
+</database>

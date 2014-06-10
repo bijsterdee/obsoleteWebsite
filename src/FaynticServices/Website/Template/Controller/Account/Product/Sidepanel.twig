@@ -1,0 +1,62 @@
+{% set bouncers = 0 %}
+{% set databases = 0 %}
+{% set domains = 0 %}
+{% for accountProduct in account.getAccountProducts() %}
+    {% set product = accountProduct.getProduct() %}
+    {% if 'bouncer' == product.getCategory() %}
+        {% set bouncers = bouncers + 1 %}
+    {% elseif 'database' == product.getCategory() %}
+        {% set databases = databases + 1 %}
+    {% elseif 'domain' == product.getCategory() %}
+        {% set domains = domains + 1 %}
+    {% endif %}
+{% endfor %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span class="icon-cube"></span> Mijn producten
+    </div>
+    <ul class="list-group">
+        {#<li class="list-group-item">#}
+            {#<span class="icon-database"></span>#}
+            {#<a href="/account/product/database/">Databases</a>#}
+            {#<span class="badge pull-right">{{ databases|default('0') }}</span>#}
+        {#</li>#}
+        <li class="list-group-item">
+            <span class="badge pull-right">{{ domains|default('0') }}</span>
+            <span class="icon-anchor"></span>
+            <a href="/account/product/domain/">Domeinen</a>
+        </li>
+        <li class="list-group-item">
+            <span class="badge pull-right">{{ account.countAccountFtps()|default('0') }}</span>
+            <span class="icon-folder"></span>
+            <a href="/account/product/ftp/">FTP accounts</a>
+        </li>
+        <li class="list-group-item">
+            <span class="badge pull-right">{{ bouncers|default('0') }}</span>
+            <span class="icon-network"></span>
+            <a href="/account/product/bouncer/">IRC bouncers</a>
+        </li>
+        {#<li class="list-group-item">#}
+            {#<span class="badge pull-right">{{ account.countAccountEmails()|default('0') }}</span>#}
+            {#<span class="icon-envelope"></span>#}
+            {#<a href="/account/product/email/">E-mail</a>#}
+        {#</li>#}
+        {#<li class="list-group-item">#}
+            {#<span class="badge pull-right">{{ count.website|default('0') }}</span>#}
+            {#<span class="icon-earth"></span>#}
+            {#<a href="/account/product/website/">Websites</a>#}
+        {#</li>#}
+    </ul>
+</div>
+{#<div class="panel panel-default">#}
+    {#<div class="panel-heading">#}
+        {#<span class="icon-storage2"></span> Schijfruimte#}
+        {#<a class="btn btn-success btn-xs pull-right"><span class="icon-xs icon-wand2"></span> Uitbreiden</a>#}
+    {#</div>#}
+    {#<div class="panel-body">#}
+        {#<div class="progress progress-striped">#}
+            {#<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;"></div>#}
+        {#</div>#}
+        {#<small class="pull-right">2048 MB / 3072 MB</small>#}
+    {#</div>#}
+{#</div>#}

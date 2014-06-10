@@ -1,0 +1,50 @@
+{
+    "name": "fayntic-services/website",
+    "description": "Fayntic Services",
+    "version": "0.0.1-alpha",
+    "type": "project",
+    "homepage": "http://www.fayntic.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Danny Loomeijer",
+            "email": "danny.loomeijer@fayntic.com",
+            "homepage": "http://danny.loomeijer.net/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@fayntic.com",
+        "irc": "irc://irc.fayntirc.org/fayntic"
+    },
+    "require": {
+        "linkorb/transip-php": "*",
+        "php": ">=5.5.0",
+        "propel/propel": "2.0.0-alpha3",
+        "symfony/dependency-injection": "2.4.4",
+        "twig/extensions": "v1.0.1",
+        "twig/twig": "1.15.1",
+        "ircmaxell/random-lib": "1.0.0",
+        "swiftmailer/swiftmailer": "5.2.0",
+        "zendesk/zendesk_api_client_php": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "FaynticServices": "src"
+        }
+    },
+    "config": {
+        "bin-dir": "bin",
+        "cache-dir": "cache",
+        "generated-dir": "generated",
+        "src-dir": "src",
+        "sql-dir": "sql",
+        "vendor-dir": "vendor"
+    },
+    "scripts": {
+        "pre-install-cmd": "FaynticServices\\Composer\\Installer::dispatchStartup",
+        "post-install-cmd": "FaynticServices\\Composer\\Installer::dispatchShutdown",
+        "pre-update-cmd": "FaynticServices\\Composer\\Installer::dispatchStartup",
+        "post-update-cmd": "FaynticServices\\Composer\\Installer::dispatchShutdown"
+    }
+}

@@ -1,0 +1,66 @@
+<div class="col-md-4">
+    {% include 'Controller/Account/Product/Sidepanel.twig' %}
+</div>
+<div class="col-md-8">
+    {% include 'Helper/Status.twig' %}
+    <form class="form-horizontal" method="post" action="" autocomplete="off">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="icon-folder"></span> Website
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="username" class="col-md-3 control-label">Hostnaam</label>
+
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <input class="form-control" value="{{ website.subdomain }}" placeholder="<geen>"/>
+                            <span class="input-group-addon">.</span>
+                            <select class="form-control">
+                                <optgroup label="domeinen">
+                                    {% for domain in account.getAccountProducts() %}
+                                        {% if domain.getName() %}
+                                            <option{% if domain.getName() == email.getEmail()|split('@')[1] %} selected="selected"{% endif %}>{{ domain.getName() }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </optgroup>
+                                <option data-selected="input">anders ...</option>
+                            </select>
+                        </div>
+                        <small class="help-block hide"></small>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-md-3 control-label">Wachtwoord</label>
+
+                    <div class="col-md-9">
+                        <input type="password" id="password" name="password" class="form-control" data-validate-url="/account/product/ftp/validate-password/"/>
+                        <small class="help-block hide"></small>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <label for="location" class="col-md-3 control-label">Locatie</label>
+
+                    <div class="col-md-9">
+                        <input type="text" id="location" name="location" class="form-control typeahead" value="{{ user.getLocation() }}" data-validate-url="/account/product/ftp/validate-location/"/>
+                        <small class="help-block hide"></small>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="btn-group col-md-3">
+                    <a class="btn btn-default" href="/account/product/ftp/"><span class="icon-undo2"></span> terug</a>
+                </div>
+                <div class="btn-group col-md-9">
+                    <button type="submit" class="btn btn-primary"><span class="icon-disk"></span> opslaan</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

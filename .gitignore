@@ -1,0 +1,7 @@
+.idea
+bin/
+cache/
+composer.lock
+src/FaynticServices/Website/Model/Base/
+src/FaynticServices/Website/Model/Map/
+vendor/

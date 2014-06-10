@@ -1,0 +1,121 @@
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="icon-vcard"></span>
+            Klantgegevens
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" method="post" action="/account/contact/update/">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Gebruikersnaam</label>
+
+                    <div class="col-md-9">
+                        <p class="form-control-static">{{ account.getLogin() }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Klantnummer</label>
+
+                    <div class="col-md-9">
+                        <p class="form-control-static">{{ account.getId() }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Klant sinds</label>
+
+                    <div class="col-md-9">
+                        <p class="form-control-static">{{ account.createdAt()|date("d-m-Y H:i:s") }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="language" class="col-md-3 control-label">Taalvoorkeur</label>
+
+                    <div class="col-md-9">
+                        <select id="language" name="language_id" class="form-control">
+                            {% for language in languages %}
+                                <option value="{{ language.getId() }}"{% if language.getId() == account.getLanguageId() %} selected="selected"{% endif %}>{{ language.getName() }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Geslacht</label>
+
+                    <div class="col-md-9">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender"
+                                       value="male"{% if 'male' == account.getAccountContact.getGender() %} checked="checked"{% endif %}/>
+                                <span class="icon-male"></span>
+                                Man
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gender"
+                                       value="female"{% if 'female' == account.getAccountContact.getGender() %} checked="checked"{% endif %}/>
+                                <span class="icon-female"></span>
+                                Vrouw
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-md-3 control-label">Naam</label>
+
+                    <div class="col-md-9">
+                        <input id="name" name="name" class="form-control"
+                               value="{{ account.getAccountContact.getName() }}" required="required"
+                               pattern="^(.){3,}\s(.){3,}$"/>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-md-3 control-label">Adres</label>
+
+                    <div class="col-md-9">
+                        <textarea id="address" name="address" class="form-control"
+                                  rows="3">{{ account.getAccountContact.getAddress() }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="country" class="col-md-3 control-label">Land</label>
+
+                    <div class="col-md-9">
+                        <select id="country" name="country_id" class="form-control">
+                            {% for country in countries %}
+                                <option value="{{ country.getId() }}"{% if country.getId() == account.getAccountContact.getCountry().getId() %} selected="selected"{% endif %}>{{ country.getName() }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <label for="email" class="col-md-3 control-label">E-mail adres</label>
+
+                    <div class="col-md-9">
+                        <input id="email" name="email" class="form-control"
+                               value="{{ account.getAccountContact.getEmail() }}" required="required"
+                               pattern="^.+@.+\..+$"/>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="col-md-3 control-label">Telefoonnummer</label>
+
+                    <div class="col-md-9">
+                        <input id="phone" name="phone" class="form-control"
+                               value="{{ account.getAccountContact.getPhone() }}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="btn-group col-md-9 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary"><span class="icon-disk"></span> Opslaan</button>
+                        <a class="btn btn-default" href="/account/dashboard/"><span class="icon-undo2"></span> Terug</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

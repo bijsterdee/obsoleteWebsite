@@ -1,0 +1,32 @@
+<div class="col-md-4">
+    {% include 'Controller/Account/Product/Sidepanel.twig' %}
+</div>
+<div class="col-md-8">
+    {% include 'Helper/Status.twig' %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="icon-anchor"></span> Domeinen
+        </div>
+        <table class="table table-sortable">
+            <thead>
+                <tr>
+                    <th>domein</th>
+                    <th class="col-md-1 filter-false"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for domain in domains %}
+                    <tr>
+                        <td>{{ domain.getName() }}</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs text-left">
+                                <a href="//{{ server.http_host }}/account/product/domain/manage/{{ domain.getId() }}/" class="btn btn-primary">
+                                    <span class="icon-cog"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="col-md-1 text-center">Aantal</th>
+            <th>Omschrijving</th>
+            <th class="col-md-2 text-right">Stukprijs</th>
+            <th class="col-md-2 text-right">Prijs</th>
+            <th class="col-md-1 text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+            <tr>
+                <td class="text-center{% if "" != product.getName() %} vertical-align-top{% endif %}">{{ product.getAmount() }}
+                    <small class="pull-right"><span class="icon-close2"></span></small>
+                </td>
+                <td class="{% if "" != product.getName() %}vertical-align-top{% endif %}">
+                    {{ product.getProduct().getProductCategory().getName() }} {{ product.getProduct().getName() }}
+                    <small class="small pull-right">
+                        {% if product.getTerminatedAt() %}
+                            <small class="text-danger">Opgezegd per
+                                <strong>{{ product.getTerminatedAt()|date('d-m-Y') }}</strong>
+                            </small>
+                        {% else %}
+                            <small class="text-muted">
+                                Contractverlenging op <strong>N/A</strong>
+                                {#{{ product.getTerminationDate()|date('d-m-Y') }}#}
+                            </small>
+                        {% endif %}
+                    </small>
+                    {% if "" != product.getName() %}
+                        <small class="help-block">
+                            {{ product.getName() }}
+                        </small>
+                    {% endif %}
+                </td>
+                <td class="text-right{% if "" != product.getName() %} vertical-align-top{% endif %}">
+                    <div class="col-md-1">&#8364;</div>
+                    {{ product.getPrice()|number_format(2) }}
+                    {% if product.getProduct().getPrice() > product.getPrice() %}
+                        <del class="help-block">
+                            <div class="col-md-1">&#8364;</div>
+                            {{ product.getProduct().getPrice()|number_format(2) }}
+                        </del>
+                    {% endif %}
+                </td>
+                <td class="text-right{% if "" != product.getName() %} vertical-align-top{% endif %}">
+                    <div class="col-md-1">&#8364;</div>
+                    {{ (product.getAmount() * product.getPrice())|number_format(2) }}
+                </td>
+                <td class="text-center{% if "" != product.getName() %} vertical-align-top{% endif %}">
+                    <div class="btn-group text-left">
+                        <button type="button" disabled="disabled" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <span class="icon-cog"></span>
+                        </button>
+                        {#<ul class="dropdown-menu" role="menu">#}
+                            {#<li class="dropdown-header"><strong>Product opzeggen</strong></li>#}
+                            {#{% if product.getTerminatedAt() %}#}
+                                {#<li class="small"><a href="#">Annuleren</a></li>#}
+                            {#{% else %}#}
+                                {#<li class="small"><a href="#">Direct</a></li>#}
+                                {#<li class="small"><a href="#">Einde contract</a></li>#}
+                            {#{% endif %}#}
+                        {#</ul>#}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

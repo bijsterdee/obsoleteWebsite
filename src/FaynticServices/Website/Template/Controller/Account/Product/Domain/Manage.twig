@@ -1,0 +1,141 @@
+{% macro contact(transip, type) %}
+    {% for contact in transip.contacts %}
+        {% if type == contact.type %}
+            {% if contact.companyName %}
+                <strong>{{ contact.companyName }}</strong>
+            {% endif %}
+            {{ contact.firstName }} {{ contact.middleName }} {{ contact.lastName }}
+            {{ contact.street }} {{ contact.number }}
+            {{ contact.postalCode }} {{ contact.city }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+{% import _self as whois %}
+<div class="col-md-4">
+    {% include 'Controller/Account/Product/Sidepanel.twig' %}
+</div>
+<form method="post" action="/account/product/domain/manage/{{ domain.getId() }}/">
+    <div class="col-md-8">
+        {% include 'Helper/Status.twig' %}
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="icon-anchor"></span> Domein
+                <strong class="small">{{ domain.getName() }}</strong>
+            </div>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th class="text-right col-md-3 vertical-align-top">Houdergegevens</th>
+                        <td>{{ whois.contact(transip, 'registrant')|nl2br }}</td>
+                        <th class="col-md-1 text-center vertical-align-top">
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="text-right col-md-3">Lockinstelling</th>
+                        <td>
+                            {% if transip.isLocked %}
+                                <i class="icon-checkbox-checked2"></i>
+                            {% else %}
+                                <i class="icon-checkbox-unchecked3"></i>
+                            {% endif %}
+                        </td>
+                        <th class="col-md-1 text-center">
+                            {% if transip.isLocked %}
+                                <a class="btn btn-xs btn-primary" href="//{{ server.http_host }}/account/product/domain/lock/disable/{{ domain.getId() }}/"><span class="icon-unlocked"></span></a>
+                            {% else %}
+                                <a class="btn btn-xs btn-primary" href="//{{ server.http_host }}/account/product/domain/lock/enable/{{ domain.getId() }}/"><span class="icon-lock2"></span></a>
+                            {% endif %}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="text-right col-md-3">Autorisatiecode</th>
+                        <td>{{ transip.authCode }}</td>
+                        <th class="col-md-1 text-center"></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="icon-list"></span> Records
+                <strong class="small">{{ domain.getName() }}</strong>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-3">Naam</th>
+                        <th class="col-md-2 text-center"><abbr title="Time To Live">TTL</abbr></th>
+                        <th class="col-md-2 text-center">Type</th>
+                        <th>Content</th>
+                        <th class="col-md-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set index = 0 %}
+                    {% for record in transip.dnsEntries %}
+                        <tr data-index="{{ index }}" data-type="data">
+                            <td>
+                                <input type="text" name="record[{{ index }}][name]" class="form-control input-sm" value="{{ record.name }}"/>
+                            </td>
+                            <td>
+                                <select name="record[{{ index }}][ttl]" class="form-control input-sm">
+                                    {% for expire in [60, 300, 3600, 86400] %}
+                                        <option value="{{ expire }}"{% if expire == record.expire %} selected="selected"{% endif %}>{{ expire }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <select name="record[{{ index }}][type]" class="form-control input-sm">
+                                    {% for type in ['A', 'AAAA', 'CNAME', 'MX', 'NS', 'TXT', 'SRV'] %}
+                                        <option value="{{ type }}"{% if type == record.type %} selected="selected"{% endif %}>{{ type }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" name="record[{{ index }}][content]" class="form-control input-sm" value="{{ record.content }}"/>
+                            </td>
+                            <td class="text-center">
+                                <a data-action="delete" data-confirm="Weet u zeker dat u dit record wilt verwijderen?" class="btn btn-xs btn-danger">
+                                    <span class="icon-minus-circle"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% set index = index + 1 %}
+                    {% endfor %}
+                    <tr data-type="template">
+                        <td>
+                            <input data-name="record[%][name]" type="text" class="form-control input-sm"/>
+                        </td>
+                        <td>
+                            <select data-name="record[%][ttl]" data-value="86400" class="form-control input-sm">
+                                {% for expire in [60, 300, 3600, 86400] %}
+                                    <option value="{{ expire }}"{% if expire == 86400 %} selected="selected"{% endif %}>{{ expire }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select data-name="record[%][type]" data-value="A" class="form-control input-sm">
+                                {% for type in ['A', 'AAAA', 'CNAME', 'MX', 'NS', 'TXT', 'SRV'] %}
+                                    <option value="{{ type }}"{% if type == 'A' %} selected="selected"{% endif %}>{{ type }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td><input data-name="record[%][content]" data-value="" type="text" class="form-control input-sm"/></td>
+                        <td class="text-center">
+                            <a data-action="create" data-confirm="Weet u zeker dat u dit record wilt verwijderen?" class="btn btn-xs btn-success">
+                                <span class="icon-plus-circle"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary"><span class="icon-disk"></span> Opslaan</button>
+                        <a href="//{{ server.http_host }}/account/product/domain/" class="btn btn-default pull-right"><span class="icon-undo2"></span>
+                            Annuleren</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

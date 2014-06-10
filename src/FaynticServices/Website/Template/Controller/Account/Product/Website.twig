@@ -1,0 +1,63 @@
+<div class="col-md-4">
+    {% include 'Controller/Account/Product/Sidepanel.twig' %}
+</div>
+<div class="col-md-8">
+    {% include 'Helper/Status.twig' %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="icon-globe"></span> Websites
+        </div>
+        <table class="table table-sortable">
+            <thead>
+                <tr>
+                    <th class="col-md-3">Hostnaam</th>
+                    <th>Locatie</th>
+                    <th class="col-md-1 filter-false"></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="text-center">
+                        <div class="btn-group btn-group-xs text-left">
+                            <a class="btn btn-success" href="//{{ server.http_host }}/account/product/website/create/" title="Toevoegen">
+                                <span class="icon-plus-circle"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for website in websites %}
+                    <tr>
+                        <td>
+                            {% if website.getSubDomain() %}
+                                {{ website.getSubDomain() ~ '.' ~ website.getDomain() }}
+                            {% else %}
+                                <strong>{{ website.getDomain() }}</strong>
+                            {% endif %}
+                        </td>
+                        <td>{{ website.getLocation()|default('/') }}</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs text-left">
+                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Instellingen">
+                                    <span class="icon-cogs"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header"><strong>{{ user.getUsername() }}</strong></li>
+                                    <li class="small">
+                                        <a href="//{{ server.http_host }}/account/product/ftp/update/{{ user.getId() }}/">Bewerken</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="small">
+                                        <a href="//{{ server.http_host }}/account/product/ftp/delete/{{ user.getId() }}/">Verwijderen</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

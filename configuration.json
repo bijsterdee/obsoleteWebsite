@@ -1,0 +1,49 @@
+{
+    "database": {
+        "fayntic-services": {
+            "default": true,
+            "adapter": "mysql",
+            "connection": {
+                "dsn": "mysql:unix_socket=/var/run/mysqld/mysqld.sock;dbname=fayntic-services",
+                "user": "username",
+                "password": "password",
+                "options": {
+                    "ATTR_PERSISTENT": false
+                },
+                "attributes": {
+                    "ATTR_EMULATE_PREPARES": false
+                },
+                "settings": {
+                    "charset": "utf8"
+                }
+            }
+        }
+    },
+    "vendor": {
+        "transip": {
+            "mode": "readwrite",
+            "login": "",
+            "privatekey": ""
+        },
+        "zendesk": {
+            "subdomain": "faynticservices",
+            "username": "",
+            "token": ""
+        }
+    },
+    "domain": {
+        "root": "fayntic.com",
+        "fqdn": "www.fayntic.com",
+        "assets": "static.fayntic.com"
+    },
+    "bouncer": {
+        "server": {
+            "nickname": "Fayntic",
+            "username": "fayntic",
+            "realname": "Fayntic Services",
+            "address": "tcp://bnc.fayntic.com:6667",
+            "password": ""
+        },
+        "ip_prefix": ""
+    }
+}

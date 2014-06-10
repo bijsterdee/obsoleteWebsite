@@ -1,0 +1,143 @@
+<div class="col-md-offset-3 col-md-6">
+    {% include 'Helper/Status.twig' %}
+    {#<div class="col-md-5">#}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="icon-enter3"></span>
+            Bestaande klant
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" method="post" action="/account/authentication/" autocomplete="off">
+                <div class="form-group">
+                    <label for="username" class="col-md-4 control-label">Gebruikersnaam</label>
+
+                    <div class="col-md-8">
+                        <input type="text" id="username" name="username" class="form-control"/>
+                        <small class="help-block hide"></small>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-md-4 control-label">Wachtwoord</label>
+
+                    <div class="col-md-8">
+                        <input type="password" id="password" name="password" class="form-control"/>
+                        <small class="help-block hide"></small>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8 col-md-offset-4">
+                        <button type="submit" class="btn btn-primary">Inloggen</button>
+                        <a href="//{{ server.http_host }}/account/reset/" class="btn btn-sm btn-link">Login vergeten?</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{#<div class="col-md-7">#}
+    {#<div class="panel panel-default">#}
+        {#<div class="panel-heading">#}
+            {#<span class="icon-user-plus"></span>#}
+            {#Aanmelden#}
+        {#</div>#}
+        {#<div class="panel-body">#}
+            {#<form class="form-horizontal" role="form" method="post" action="/account/register/">#}
+                {#<div class="form-group">#}
+                    {#<label class="col-md-4 control-label">Geslacht</label>#}
+
+                    {#<div class="col-md-8">#}
+                        {#<div class="radio">#}
+                            {#<label>#}
+                                {#<input type="radio" name="gender" value="male" checked="checked"/>#}
+                                {#<span class="icon-male"></span>#}
+                                {#Man#}
+                            {#</label>#}
+                        {#</div>#}
+                        {#<div class="radio">#}
+                            {#<label>#}
+                                {#<input type="radio" name="gender" value="female"/>#}
+                                {#<span class="icon-female"></span>#}
+                                {#Vrouw#}
+                            {#</label>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="form-group">#}
+                    {#<label for="name" class="col-md-4 control-label">Naam</label>#}
+
+                    {#<div class="col-md-8">#}
+                        {#<input id="name" name="name" class="form-control" placeholder="John Doe" data-validate-url="/account/validate-name/"/>#}
+                        {#<small class="help-block hide"></small>#}
+                        {#<span class="form-control-feedback"></span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="form-group">#}
+                    {#<label for="address" class="col-md-4 control-label">Adres</label>#}
+
+                    {#<div class="col-md-8">#}
+                        {#<textarea id="address" name="address" class="form-control" rows="3" data-validate-url="/account/validate-address/"></textarea>#}
+                        {#<small class="help-block hide"></small>#}
+                        {#<span class="form-control-feedback"></span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="form-group">#}
+                    {#<label for="country" class="col-md-4 control-label">Land</label>#}
+
+                    {#<div class="col-md-8">#}
+                        {#<select id="country" name="country_id" class="form-control" data-validate-url="/account/validate-country/">#}
+                            {#{% for country in countries %}#}
+                                {#<option value="{{ country.getId() }}"{% if country.getIdentifier() == locale %} selected="selected"{% endif %}>{{ country.getName() }}</option>#}
+                            {#{% endfor %}#}
+                        {#</select>#}
+                        {#<small class="help-block hide"></small>#}
+                        {#<span class="form-control-feedback"></span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="form-group">#}
+                    {#<label for="email" class="col-md-4 control-label">E-mail adres</label>#}
+
+                    {#<div class="col-md-8">#}
+                        {#<input type="email" id="email" name="email" class="form-control" data-validate-url="/account/validate-email/"/>#}
+                        {#<small class="help-block hide"></small>#}
+                        {#<span class="form-control-feedback"></span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<hr/>#}
+                {#<div class="form-group">#}
+                    {#<label for="username-register" class="col-md-4 control-label">Gebruikersnaam</label>#}
+
+                    {#<div class="col-md-8">#}
+                        {#<input type="text" id="username-register" name="username" class="form-control" data-validate-url="/account/validate-username/"/>#}
+                        {#<small class="help-block hide"></small>#}
+                        {#<span class="form-control-feedback"></span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="form-group">#}
+                    {#<label for="new-password" class="col-md-4 control-label">Wachtwoord</label>#}
+
+                    {#<div class="col-md-8">#}
+                        {#<input type="password" id="new-password" name="new-password" class="form-control" data-validate-url="/account/validate-password/"/>#}
+                        {#<small class="help-block hide"></small>#}
+                        {#<span class="form-control-feedback"></span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="form-group">#}
+                    {#<label for="new-password2" class="col-md-4 control-label">Wachtwoord verificatie</label>#}
+
+                    {#<div class="col-md-8">#}
+                        {#<input type="password" id="new-password2" name="new-password2" class="form-control" data-comparison="new-password" data-validate-url="/account/validate-password/"/>#}
+                        {#<small class="help-block hide"></small>#}
+                        {#<span class="form-control-feedback"></span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="form-group">#}
+                    {#<div class="btn-group col-md-8 col-md-offset-4">#}
+                        {#<button class="btn btn-primary">Account aanmaken</button>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</form>#}
+        {#</div>#}
+    {#</div>#}
+{#</div>#}

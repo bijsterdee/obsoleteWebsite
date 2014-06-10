@@ -1,0 +1,9 @@
+Header set Access-Control-Allow-Origin "*"
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule !\.(css|js|ico|png|eot|svg|ttf|woff)$ - [F,L]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule .* - [L]

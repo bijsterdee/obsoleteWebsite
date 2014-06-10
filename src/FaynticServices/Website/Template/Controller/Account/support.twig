@@ -1,0 +1,48 @@
+{% macro getStatusClass(ticket) %}
+    {% if ticket.status in ['new', 'open'] %}
+        <div class="label label-danger">Open</div>
+    {% elseif ticket.status in ['pending', 'hold'] %}
+        <div class="label label-warning">In behandeling</div>
+    {% elseif 'solved' == ticket.status %}
+        <div class="label label-success">Opgelost</div>
+    {% elseif 'closed' == ticket.status %}
+        <div class="label label-default">Gesloten</div>
+    {% endif %}
+{% endmacro %}
+{% import _self as ticketStatus %}
+<div class="panel panel-default">
+    {% include 'Helper/Status.twig' %}
+    <div class="panel-heading">
+        <span class="icon-tags"></span>
+        Mijn tickets
+        <a class="btn btn-xs btn-primary pull-right" href="//{{ server.http_host }}/account/support/create/">
+            <span class="icon-xs icon-wand2"></span> ticket aanmaken</a>
+    </div>
+    <table class="table table-bordered table-sortable">
+        <thead>
+        <tr>
+            <th class="col-md-1 text-center">#</th>
+            <th>onderwerp</th>
+            <th class="col-md-1 filter-select text-center">status</th>
+            <th class="col-md-2 text-center">aanmaakdatum</th>
+            <th class="col-md-2 text-center">laatste wijziging</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets|reverse %}
+            <tr>
+                <td class="text-center"><a href="/account/support/show/{{ ticket.id }}/">#{{ ticket.id }}</a></td>
+                <td>{{ ticket.subject }}</td>
+                <td class="text-center">{{ ticketStatus.getStatusClass(ticket) }}</td>
+                <td class="text-center">{{ ticket.created_at|date('d-m-y H:i:s') }}</td>
+                <td class="text-center">{{ ticket.updated_at|date('d-m-y H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if account.countTickets() > 10 %}
+        <div class="panel-body">
+            {% include 'Helper/Pager.twig' %}
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Fayntic Services</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon" href="//{{ configuration.domain.assets }}/favicon.ico" />
+        {#{% if 'production' == configuration.application.environment %}#}
+            {% include 'Helper/Pingdom.twig' %}
+        {#{% endif %}#}
+        <link href="//{{ configuration.domain.assets }}/css/bootstrap.min.css?-{{ configuration.application.include_suffix }}" rel="stylesheet" type="text/css" media="screen"/>
+        <link href="//{{ configuration.domain.assets }}/css/bootstrap-theme.min.css?-{{ configuration.application.include_suffix }}" rel="stylesheet" type="text/css" media="screen"/>
+        <link href="//{{ configuration.domain.assets }}/css/bootstrap-tablesorter.min.css?-{{ configuration.application.include_suffix }}" rel="stylesheet" type="text/css" media="screen"/>
+        <link href="//{{ configuration.domain.assets }}/css/icomoon.min.css?-{{ configuration.application.include_suffix }}" rel="stylesheet" type="text/css"/>
+        <link href="//{{ configuration.domain.assets }}/css/style.css?-{{ configuration.application.include_suffix }}" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="header">
+                <div class="container">
+                    <ul class="nav nav-pills navbar-left">
+                        <li>
+                            <img src="//{{ configuration.domain.assets }}/images/logo.png" width="32" height="32"/>
+                            <strong class="text-primary">Fayntic Services</strong>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills navbar-right">
+                        <li>
+                            <ul class="nav nav-pills">
+                                {% if account.login %}
+                                    <li class="alternative">
+                                        <a href="//{{ server.http_host }}/account/product/">
+                                            <i class="icon-cube"></i>
+                                            Mijn producten
+                                        </a>
+                                    </li>
+                                    {#<li class="alternative">#}
+                                        {#<a href="//{{ server.http_host }}">#}
+                                            {#<span class="icon-profile"></span>#}
+                                            {#Mijn facturen#}
+                                        {#</a>#}
+                                    {#</li>#}
+                                    <li class="alternative">
+                                        <a href="//{{ server.http_host }}/account/support/">
+                                            <span class="icon-tags"></span>
+                                            Mijn tickets
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="nav nav-pills">
+                                <li>
+                                    <a href="//{{ server.http_host }}/account/">
+                                        <span class="icon-user3"></span> {{ account.accountContact.name|default(account.login)|default("Mijn account") }}
+                                    </a>
+                                </li>
+                                {% if account.login %}
+                                    <li>
+                                        <a href="//{{ server.http_host }}/account/logout/">
+                                            <span class="icon-exit"></span>
+                                            Uitloggen
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <div class="container">
+                    <ul class="nav nav-pills pull-left">
+                        {#<li><a href="//{{ server.http_host }}/dashboard/"><i class="icon-home2"></i> Dashboard</a></li>#}
+                        {#<li><a href="//{{ server.http_host }}/domain/"><i class="icon-anchor"></i> Domeinnaam</a></li>#}
+                        {#<li><a href="//{{ server.http_host }}/webhosting/"><i class="icon-earth"></i> Webhosting</a></li>#}
+                        {#<li><a href="//{{ server.http_host }}/email/"><i class="icon-envelope"></i> E-mail</a></li>#}
+                        {#<li><a href="//{{ server.http_host }}/irc-bouncer/"><i class="icon-network"></i> IRC Bouncers</a></li>#}
+
+                    </ul>
+                    <ul class="nav nav-pills pull-right">
+                        <li><a href="//{{ server.http_host }}/company/"><i class="icon-office"></i> Over ons</a></li>
+                        {#<li><a href="//{{ server.http_host }}/support/"><i class="icon-support"></i> Ondersteuning</a></li>#}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            {% include template ignore missing %}
+        </div>
+        <script src="//{{ configuration.domain.assets }}/scripts/jquery.min.js?-{{ configuration.application.include_suffix }}"></script>
+        <script src="//{{ configuration.domain.assets }}/scripts/jquery/delay.min.js?-{{ configuration.application.include_suffix }}"></script>
+        <script src="//{{ configuration.domain.assets }}/scripts/jquery/typeahead.min.js?-{{ configuration.application.include_suffix }}"></script>
+        <script src="//{{ configuration.domain.assets }}/scripts/jquery/tablesorter.min.js?-{{ configuration.application.include_suffix }}"></script>
+        <script src="//{{ configuration.domain.assets }}/scripts/jquery/tablesorter/pager.min.js?-{{ configuration.application.include_suffix }}"></script>
+        <script src="//{{ configuration.domain.assets }}/scripts/jquery/tablesorter/widgets.min.js?-{{ configuration.application.include_suffix }}"></script>
+        <script src="//{{ configuration.domain.assets }}/scripts/bootstrap.min.js?-{{ configuration.application.include_suffix }}"></script>
+        <script src="//{{ configuration.domain.assets }}/scripts/fayntic.js?-{{ configuration.application.include_suffix }}"></script>
+    </body>
+</html>

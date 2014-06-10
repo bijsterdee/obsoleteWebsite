@@ -1,0 +1,47 @@
+<div class="col-md-4">
+    {% include 'Controller/Account/Product/Sidepanel.twig' %}
+</div>
+<div class="col-md-8">
+    {% include 'Helper/Status.twig' %}
+    <form class="form-horizontal" method="post" action="" autocomplete="off">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="icon-folder"></span> FTP account
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="username" class="col-md-3 control-label">Gebruikersnaam</label>
+                    <div class="col-md-9">
+                        <p class="form-control-static">{{ user.getUsername() }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-md-3 control-label">Wachtwoord</label>
+
+                    <div class="col-md-9">
+                        <input type="password" id="password" name="password" class="form-control" data-validate-url="/account/product/ftp/validate-password/" placeholder="Voer een nieuw wachtwoord in om te wijzigen"/>
+                        <small class="help-block hide"></small>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <label for="location" class="col-md-3 control-label">Locatie</label>
+
+                    <div class="col-md-9">
+                        <input type="text" id="location" name="location" class="form-control typeahead" value="{{ user.getLocation() }}" data-validate-url="/account/product/ftp/validate-location/"/>
+                        <small class="help-block hide"></small>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-9 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary"><span class="icon-disk"></span> Opslaan</button>
+                        <a href="//{{ server.http_host }}/account/product/ftp/" class="btn btn-default pull-right"><span class="icon-undo2"></span>
+                            Annuleren</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

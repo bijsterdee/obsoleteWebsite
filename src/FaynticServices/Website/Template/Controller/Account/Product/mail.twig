@@ -1,0 +1,113 @@
+<div class="col-md-4">
+    {% include 'Controller/Account/Product/Sidepanel.twig' %}
+</div>
+<div class="col-md-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="icon-envelope"></span> E-mail accounts
+        </div>
+        <table class="table table-sortable">
+            <thead>
+                <tr>
+                    <th>E-mail adres</th>
+                    <th class="col-md-2">Quota</th>
+                    <th class="col-md-1 filter-false"></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="text-center">
+                        <div class="btn-group btn-group-xs text-left">
+                            <a class="btn btn-success" href="//{{ server.http_host }}/account/product/email/account/create/" title="Toevoegen">
+                                <span class="icon-plus-circle"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for emailAccount in account.getAccountEmails() %}
+                    <tr>
+                        <td>{{ emailAccount.getEmail() }}</td>
+                        <td class="text-center">
+                            {% if emailAccount.getQuota() %}
+                                {{ emailAccount.getQuota() }} MB
+                            {% else %}
+                                &infin;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs text-left">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <span class="icon-cogs"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">{{ emailAccount.getEmail() }}</li>
+                                    <li class="divider"></li>
+                                    <li class="small">
+                                        <a href="//{{ server.http_host }}/account/product/email/account/update/{{ account.getId() }}/">Bewerken</a>
+                                    </li>
+                                    <li class="small">
+                                        <a href="//{{ server.http_host }}/account/product/email/account/delete/{{ account.getId() }}/">Verwijderen</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="icon-mail-send"></span> E-mail doorsturen
+        </div>
+        <table class="table table-sortable">
+            <thead>
+                <tr>
+                    <th class="col-md-5">Van</th>
+                    <th class="col-md-6">Naar</th>
+                    <th class="col-md-1 filter-false"></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td class="text-center">
+                        <div class="btn-group btn-group-xs text-left">
+                            <a class="btn btn-success" href="//{{ server.http_host }}/account/product/email/alias/create/" title="Toevoegen">
+                                <span class="icon-plus-circle"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for emailAlias in account.getAccountEmailAliases() %}
+                    <tr>
+                        <td>{{ emailAlias.getSource() }}</td>
+                        <td>{{ emailAlias.getTarget() }}</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs text-left">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <span class="icon-cogs"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">{{ emailAlias.getSource() }}</li>
+                                    <li class="divider"></li>
+                                    <li class="small">
+                                        <a href="//{{ server.http_host }}/account/product/ftp/modify/{{ account.getId() }}/">Bewerken</a>
+                                    </li>
+                                    <li class="small">
+                                        <a href="//{{ server.http_host }}/account/product/ftp/delete/{{ account.getId() }}/">Verwijderen</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

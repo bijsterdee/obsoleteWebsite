@@ -1,0 +1,35 @@
+# Deny users to view this file
+<Files ~ "^\.ht(access|passwd)$">
+    order allow,deny
+    deny from all
+</Files>
+
+# Set apache options
+Options All -Indexes +FollowSymLinks
+
+# Enable rewrite engine + rewrite rules
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+
+    RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|POST|PUT)$ [NC]
+    RewriteRule .* - [F,NS,L]
+
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} index.php
+    RewriteRule .* - [L]
+
+    # temporary redirect
+    RewriteCond %{REQUEST_URI} ^/$
+    RewriteRule .* /account/ [R=302,L]
+
+    RewriteCond %{REQUEST_URI} !/$
+    RewriteCond %{ENV:TRAILING_SLASH} !=1
+    RewriteRule .* %{REQUEST_URI}/ [R=301,E=TRAILING_SLASH:1,L]
+
+    RewriteRule .* index.php [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    order allow,deny
+    deny from all
+</IfModule>

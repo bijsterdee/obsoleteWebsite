@@ -1,0 +1,28 @@
+<div class="col-md-offset-3 col-md-6">
+    {% include 'Helper/Status.twig' %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="icon-support"></span>
+            Wachtwoord herstellen
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" method="post" action="//{{ server.http_host }}/account/reset/code/" autocomplete="off">
+                <div class="form-group">
+                    <label for="username" class="col-md-4 control-label">Code</label>
+
+                    <div class="col-md-8">
+                        <input type="text" id="code" name="code" class="form-control"/>
+                        <small class="help-block hide"></small>
+                        <span class="form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8 col-md-offset-4">
+                        <button type="submit" class="btn btn-primary">Code controleren</button>
+                        <a href="//{{ server.http_host }}/account/" class="btn btn-default pull-right">Annuleren</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
